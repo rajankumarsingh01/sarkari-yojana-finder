@@ -1,9 +1,9 @@
 import express from "express";
-import { getAllSchemes, getSchemeBySlug } from "../controllers/schemeController.js";
+import { listSchemes, getScheme } from "../controllers/schemeController.js";
 
 const router = express.Router();
 
-router.get("/", getAllSchemes);
-router.get("/:slug", getSchemeBySlug);
+router.get("/", listSchemes);
+router.get("/:slug", getScheme);
 
 export default router;

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
-import { registerSchema, loginSchema } from "../utils/validators.js";
+import { registerSchema, loginSchema, parseOrThrow } from "../utils/validators.js";
 import { AppError } from "../utils/errorHandler.js";
 
 function signToken(userId) {
@@ -21,11 +21,7 @@ function setAuthCookie(res, token) {
 
 export async function register(req, res, next) {
   try {
-    const parsed = registerSchema.safeParse(req.body);
-    if (!parsed.success) {
-      throw new AppError(parsed.error.errors[0].message, 400);
-    }
-    const { name, email, password } = parsed.data;
+    const { name, email, password } = parseOrThrow(registerSchema, req.body);
 
     const existing = await User.findOne({ email });
     if (existing) throw new AppError("Email already registered", 409);
@@ -44,11 +40,7 @@ export async function register(req, res, next) {
 
 export async function login(req, res, next) {
   try {
-    const parsed = loginSchema.safeParse(req.body);
-    if (!parsed.success) {
-      throw new AppError(parsed.error.errors[0].message, 400);
-    }
-    const { email, password } = parsed.data;
+    const { email, password } = parseOrThrow(loginSchema, req.body);
 
     const user = await User.findOne({ email });
     if (!user) throw new AppError("Invalid credentials", 401);
