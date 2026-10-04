@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "pm-kisan",
+    "name": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+    "level": "central",
+    "states": ["all"],
+    "occupations": ["farmer"],
+    "gender": "any",
+    "minAge": null,
+    "maxAge": null,
+    "maxAnnualIncome": null,
+    "socialCategories": ["all"],
+    "overview": "Income support scheme for landholding farmer families across India. UNVERIFIED - confirm exact terms on official portal.",
+    "eligibilityText": "UNVERIFIED - eligibility criteria for landholding farmer families to be confirmed from myScheme.gov.in or pmkisan.gov.in",
+    "benefits": "UNVERIFIED - benefit amount to be confirmed from official source",
+    "documents": ["Aadhaar card", "Land records", "Bank account details"],
+    "howToApply": "UNVERIFIED - application process to be confirmed from official portal",
+    "applyUrl": "https://pmkisan.gov.in",
+    "sourceUrl": "https://pmkisan.gov.in",
+    "lastVerified": null,
+    "verified": false
+  }
+]
