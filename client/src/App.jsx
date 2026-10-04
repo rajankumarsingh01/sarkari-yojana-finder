@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import FindSchemes from "./pages/FindSchemes";
 import Saved from "./pages/Saved";
-import Navbar from "./componenets/Navbar";
+import Navbar from "./components/Navbar";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 

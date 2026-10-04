@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSavedSchemes } from "../lib/saved";
-import SchemeCard from "../componenets/SchemeCard";
+import SchemeCard from "../components/SchemeCard";
 
 export default function Saved() {
   const [schemes, setSchemes] = useState([]);

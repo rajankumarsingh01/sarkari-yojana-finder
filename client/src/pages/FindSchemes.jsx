@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { checkEligibility } from "../lib/eligibility";
 import { getSavedSchemes } from "../lib/saved";
-import SchemeCard from "../componenets/SchemeCard";
+import SchemeCard from "../components/SchemeCard";
 import { useEffect } from "react";
 
 const initialForm = {
