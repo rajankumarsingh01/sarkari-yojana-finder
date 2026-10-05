@@ -31,6 +31,7 @@ export const loginSchema = z.object({
 });
 
 // Query string for GET /api/schemes. strict() rejects unknown keys.
+// q = free-text search (Hindi, English or Hinglish).
 export const schemeQuerySchema = z
   .object({
     state: z.enum(STATES, "Invalid state").optional(),
@@ -39,6 +40,12 @@ export const schemeQuerySchema = z
     status: z.enum(SCHEME_STATUSES, "Invalid status").optional(),
     type: z.enum(SCHEME_TYPES, "Invalid type").optional(),
     level: z.enum(LEVELS, "Invalid level").optional(),
+    q: z
+      .string()
+      .trim()
+      .min(2, "Search text must be at least 2 characters")
+      .max(100, "Search text cannot be more than 100 characters")
+      .optional(),
     page: z.coerce.number("page must be a number").int().min(1, "page must be 1 or more").default(1),
     limit: z.coerce
       .number("limit must be a number")

@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import SchemeList from "./pages/SchemeList";
+import SchemeDetail from "./pages/SchemeDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Saved from "./pages/Saved";
@@ -47,6 +49,8 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/schemes" element={<SchemeList />} />
+            <Route path="/schemes/:slug" element={<SchemeDetail />} />
             <Route
               path="/saved"
               element={

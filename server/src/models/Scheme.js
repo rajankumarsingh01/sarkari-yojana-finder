@@ -146,6 +146,34 @@ schemeSchema.index({ publishStatus: 1, state: 1, categories: 1 });
 schemeSchema.index({ districts: 1 });
 schemeSchema.index({ schemeStatus: 1 });
 
+// Search (Phase 3). A collection can have only ONE text index, so it covers
+// every field we want to search. default_language "none" turns off English
+// stemming/stop-words, which would only confuse Hindi and Hinglish words.
+schemeSchema.index(
+  {
+    "title.en": "text",
+    "title.hi": "text",
+    "summary.en": "text",
+    "summary.hi": "text",
+    tags: "text",
+    department: "text",
+    officialDescription: "text",
+  },
+  {
+    name: "scheme_text",
+    default_language: "none",
+    weights: {
+      "title.en": 10,
+      "title.hi": 10,
+      tags: 6,
+      "summary.en": 3,
+      "summary.hi": 3,
+      department: 3,
+      officialDescription: 1,
+    },
+  }
+);
+
 // Cross-field checks that a plain schema cannot express.
 schemeSchema.pre("validate", function () {
   // 1. Categories

@@ -1,5 +1,6 @@
 import { Scheme } from "../models/Scheme.js";
 import { AppError } from "../utils/errorHandler.js";
+import { toTextSearch } from "../utils/searchQuery.js";
 import {
   parseOrThrow,
   schemeQuerySchema,
@@ -61,6 +62,16 @@ export function buildSchemeFilter(q) {
   if (q.type) and.push({ type: q.type });
   if (q.level) and.push({ level: q.level });
 
+  if (q.q) {
+    const search = toTextSearch(q.q);
+    if (search) {
+      and.push({ $text: { $search: search } });
+    } else {
+      // Only filler words were typed ("ke liye"): match nothing instead of everything.
+      and.push({ _id: { $exists: false } });
+    }
+  }
+
   return { $and: and };
 }
 
@@ -70,10 +81,15 @@ export async function listSchemes(req, res, next) {
     const filter = buildSchemeFilter(q);
     const skip = (q.page - 1) * q.limit;
 
+    // With a search, best match first. Without one, most recently updated first.
+    const sort = q.q
+      ? { score: { $meta: "textScore" }, updatedAt: -1, _id: -1 }
+      : { updatedAt: -1, _id: -1 };
+
     const [items, total] = await Promise.all([
       Scheme.find(filter)
         .select(LIST_FIELDS)
-        .sort({ updatedAt: -1, _id: -1 })
+        .sort(sort)
         .skip(skip)
         .limit(q.limit)
         .lean(),
